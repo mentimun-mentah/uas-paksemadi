@@ -3,6 +3,7 @@ import socket
 class Server:
     _HOST = socket.gethostbyname("localhost")
     _PORT = 8081
+    _BUFFER = 1024
 
     @classmethod
     def Listen(self) -> bytes:
@@ -11,9 +12,9 @@ class Server:
             serve.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             serve.bind((self._HOST,self._PORT))
             serve.listen()
-            conn, addr = serve.accept()
-            with conn:
-                while (data := conn.recv(1024)):
+            connect, addr = serve.accept()
+            with connect as conn:
+                while (data := conn.recv(self._BUFFER)):
                     print('client -> ',data.decode('utf-8'))
                     text = input('server : ')
                     conn.send(text.encode())
