@@ -25,7 +25,7 @@ class Client:
             self.client.send(msg.encode())
             sys.stdout.flush()
 
-    def save_data(self,data: bytes):
+    def save_data(self,data: bytes) -> None:
         with open('received_file.txt',mode="wb") as f:
             f.write(data)
 
